@@ -6,6 +6,7 @@
   <title>TalkHalls - Chat Room</title>
   <link rel="stylesheet" href="chat.css" />
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -33,7 +34,7 @@
           <option value="study">Study Room</option>
         </select>
         <input type="text" placeholder="Or enter room code" id="roomCode" />
-        <button id="joinRoomBtn">Join</button>
+        <button type='submit'id="joinRoomBtn">Join</button>
       </div>
 
       <div class="room-info">
@@ -48,18 +49,20 @@
     </div>
 
     <!-- Chat Area -->
-    <div class="chat-area">
+    <div class="chat-area" id="chat-area">
       <div class="messages" id="messages">
-        <div class="message received"><span>Alice:</span> Hi everyone!</div>
-        <div class="message sent"><span>You:</span> Hello Alice!</div>
+        
       </div>
 
-      <div class="message-input">
-        <input type="text" id="messageBox" placeholder="Type a message..." />
+      <form id="message-input">
+        <input type="text" id="messageBox" placeholder="Type a message..." required />
         <button id="sendBtn">Send</button>
-      </div>
+      </form>
     </div>
 
   </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

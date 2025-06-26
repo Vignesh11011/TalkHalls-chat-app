@@ -152,16 +152,20 @@ body {
   align-self: flex-end;
   background-color: #dcf8c6;
 }
-
+.time{
+  align-self: flex-end;
+  color: dimgrey;
+  size: 1px;
+}
 /* Message Input */
-.message-input {
+#message-input {
   display: flex;
   padding: 0.8rem;
   background-color: #fff;
   border-top: 1px solid #ccc;
 }
 
-.message-input input {
+#message-input input {
   flex: 1;
   padding: 0.6rem;
   font-size: 1rem;
@@ -171,7 +175,7 @@ body {
   margin-right: 0.5rem;
 }
 
-.message-input button {
+#message-input button {
   background-color: #4caf50;
   color: white;
   border: none;
@@ -181,6 +185,6 @@ body {
   cursor: pointer;
 }
 
-.message-input button:hover {
+#message-input button:hover {
   background-color: #388e3c;
 }
