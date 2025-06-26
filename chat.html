@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TalkHalls - Chat Room</title>
+  <link rel="stylesheet" href="chat.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="chat-app">
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="app-name">TalkHalls</div>
+
+      <div class="room-switch">
+        <label for="roomSelect">Change Room:</label>
+        <select id="roomSelect">
+          <option value="general">General</option>
+          <option value="tech">Tech Talk</option>
+          <option value="gaming">Gaming Zone</option>
+          <option value="study">Study Room</option>
+        </select>
+        <input type="text" placeholder="Or enter room code" id="roomCode" />
+        <button id="joinRoomBtn">Join</button>
+      </div>
+
+      <div class="room-info">
+        <h3>Current Room: <span id="currentRoom">General</span></h3>
+        <h4>Members</h4>
+        <ul id="memberList">
+          <li>Alice</li>
+          <li>Bob</li>
+          <li>Charlie</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+      <div class="messages" id="messages">
+        <!-- Example messages -->
+        <div class="message received"><span>Alice:</span> Hi everyone!</div>
+        <div class="message sent"><span>You:</span> Hello Alice!</div>
+      </div>
+
+      <div class="message-input">
+        <input type="text" id="messageBox" placeholder="Type a message..." />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

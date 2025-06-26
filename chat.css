@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.chat-app {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  background-color: #2f3136;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-name {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  color: #00ffe1;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.room-switch label,
+.room-switch input,
+.room-switch select,
+.room-switch button {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.room-switch select,
+.room-switch input {
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.room-switch button {
+  background-color: #00bcd4;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.room-info {
+  margin-top: 1rem;
+}
+
+.room-info h3,
+.room-info h4 {
+  margin: 0.5rem 0;
+}
+
+.room-info ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.room-info li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #444;
+}
+
+/* Chat Area */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #e5ddd5;
+}
+
+.messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 70%;
+  padding: 0.6rem 1rem;
+  margin: 0.4rem 0;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  position: relative;
+}
+
+.message span {
+  font-weight: bold;
+  margin-right: 0.4rem;
+}
+
+.received {
+  align-self: flex-start;
+  background-color: #fff;
+}
+
+.sent {
+  align-self: flex-end;
+  background-color: #dcf8c6;
+}
+
+/* Message Input */
+.message-input {
+  display: flex;
+  padding: 0.8rem;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  margin-right: 0.5rem;
+}
+
+.message-input button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background-color: #388e3c;
+}
