@@ -8,12 +8,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="navbar-title">TalkHalls</div>
+    <div class="navbar-user">Welcome, <span id="currentUser">JohnDoe</span></div>
+  </div>
+
+  <!-- Main Chat App -->
   <div class="chat-app">
     
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="app-name">TalkHalls</div>
-
       <div class="room-switch">
         <label for="roomSelect">Change Room:</label>
         <select id="roomSelect">
@@ -40,7 +46,6 @@
     <!-- Chat Area -->
     <div class="chat-area">
       <div class="messages" id="messages">
-        <!-- Example messages -->
         <div class="message received"><span>Alice:</span> Hi everyone!</div>
         <div class="message sent"><span>You:</span> Hello Alice!</div>
       </div>
