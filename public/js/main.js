@@ -1,6 +1,18 @@
 const chatform=document.getElementById('message-input');
 const chatbox=document.getElementById('messages')
 const socket=io();
+const hallName=document.getElementById('currenthall');
+const MemList=document.getElementById('memberList');
+
+//query string extraction
+const {username,hall}=Qs.parse(location.search,{ignoreQueryPrefix:true});
+socket.emit('joinHall',{username,hall});
+
+socket.on('hallMems',({hall,users})=>{
+outputHallname(hall);
+outputMembers(users);
+});
+
 socket.on('Message',message=>{
     console.log(message);
     outputMessage(message);
@@ -22,3 +34,14 @@ chatform.addEventListener('submit',(e)=>{e.preventDefault();
     e.target.elements.messageBox.focus();
 
 })
+
+
+//Room details 
+
+function outputHallname(hall){
+    hallName.innerText=hall;
+
+}
+function outputMembers(users){
+    MemList.innerHTML=`${users.map(user=>`<li>${user.username}</li>`).join('')}`;
+}

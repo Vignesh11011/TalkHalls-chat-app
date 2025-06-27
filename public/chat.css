@@ -64,25 +64,25 @@ body {
   flex-direction: column;
 }
 
-.room-switch label,
-.room-switch input,
-.room-switch select,
-.room-switch button {
+.hall-switch label,
+.hall-switch input,
+.hall-switch select,
+.hall-switch button {
   display: block;
   width: 100%;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
 
-.room-switch select,
-.room-switch input {
+.hall-switch select,
+.hall-switch input {
   padding: 0.4rem;
   border-radius: 5px;
   border: none;
   outline: none;
 }
 
-.room-switch button {
+.hall-switch button {
   background-color: #00bcd4;
   color: white;
   padding: 0.5rem;
@@ -91,23 +91,23 @@ body {
   cursor: pointer;
 }
 
-.room-info {
+.hall-info {
   margin-top: 1rem;
 }
 
-.room-info h3,
-.room-info h4 {
+.hall-info h3,
+.hall-info h4 {
   margin: 0.5rem 0;
 }
 
-.room-info ul {
+.hall-info ul {
   list-style: none;
   padding-left: 0;
   max-height: 200px;
   overflow-y: auto;
 }
 
-.room-info li {
+.hall-info li {
   padding: 0.3rem 0;
   border-bottom: 1px solid #444;
 }

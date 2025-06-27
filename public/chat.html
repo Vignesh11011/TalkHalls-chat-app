@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TalkHalls - Chat Room</title>
+  <title>TalkHalls - Chat hall</title>
   <link rel="stylesheet" href="chat.css" />
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
@@ -25,26 +25,22 @@
     
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="room-switch">
-        <label for="roomSelect">Change Room:</label>
-        <select id="roomSelect">
+      <div class="hall-switch">
+        <label for="hallSelect">Change hall:</label>
+        <select id="hallSelect">
           <option value="general">General</option>
           <option value="tech">Tech Talk</option>
           <option value="gaming">Gaming Zone</option>
-          <option value="study">Study Room</option>
+          <option value="study">Study hall</option>
         </select>
-        <input type="text" placeholder="Or enter room code" id="roomCode" />
-        <button type='submit'id="joinRoomBtn">Join</button>
+        <input type="text" placeholder="Or enter hall code" id="hallCode" />
+        <button type='submit'id="joinhallBtn">Join</button>
       </div>
 
-      <div class="room-info">
-        <h3>Current Room: <span id="currentRoom">General</span></h3>
+      <div class="hall-info">
+        <h3>Current hall: <span id="currenthall"></span></h3>
         <h4>Members</h4>
-        <ul id="memberList">
-          <li>Alice</li>
-          <li>Bob</li>
-          <li>Charlie</li>
-        </ul>
+        <ul id="memberList"></ul>
       </div>
     </div>
 
@@ -61,7 +57,9 @@
     </div>
 
   </div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js"
+   integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" 
+   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/main.js"></script>
 </body>
