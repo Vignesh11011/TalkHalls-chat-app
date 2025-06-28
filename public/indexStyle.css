@@ -88,3 +88,14 @@ body {
   font-size: 0.85rem;
   color: #888;
 }
+
+.login-msg{
+  background-color: red;
+  color:whitesmoke;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  opacity: 0;
+  animation: fadeOut 7s forwards;
+}
