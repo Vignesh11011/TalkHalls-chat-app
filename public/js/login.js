@@ -4,16 +4,16 @@
   import {getFirestore,setDoc,doc} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js"
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
-
+ //import config from 'dotenv';
   // Your web app's Firebase configuration
-  const firebaseConfig = {
+  const firebaseConfig ={
     apiKey: "AIzaSyD0Owy8TdneTmE_dIZAsxyhSxSUJHVV410",
     authDomain: "talkhalls.firebaseapp.com",
     projectId: "talkhalls",
     storageBucket: "talkhalls.firebasestorage.app",
     messagingSenderId: "1021364253106",
     appId: "1:1021364253106:web:f27a149a3117d265f834ab"
-  };
+  };;
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -46,7 +46,7 @@
         const docRef=doc(db,"users",user.uid);
         setDoc(docRef,userdata)
         .then(()=>{
-            window.location.href='chat.html';
+            window.location.href='chat.html'+`?username=${username}&hall=${hall}`;
         })
         .catch((error)=>{console.error("error writing document",error);
 
