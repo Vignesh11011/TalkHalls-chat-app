@@ -126,6 +126,8 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  height: auto;
+  padding: auto;
 }
 
 .message {
@@ -136,25 +138,33 @@ body {
   font-size: 0.95rem;
   line-height: 1.4;
   position: relative;
+  height:auto;max-width:30%;overflow-wrap:break-word;white-space:normal;
 }
 
 .message span {
   font-weight: bold;
   margin-right: 0.4rem;
 }
-
+.manager{
+  align-self:center;
+  background-image: linear-gradient(to right,black, #00FF00);
+  color: #00ffe1;
+}
 .received {
   align-self: flex-start;
-  background-color: #fff;
+  color:yellow;
+  background-image: linear-gradient(to right,black,  #FF3131);
 }
 
 .sent {
   align-self: flex-end;
-  background-color: #dcf8c6;
+  color: #9966cc;
+ background-image: linear-gradient(to right, black, #9966cc);
 }
 .time{
   align-self: flex-end;
-  color: dimgrey;
+  color:white;
+  opacity: 0.5;
   size: 1px;
 }
 /* Message Input */
@@ -176,8 +186,8 @@ body {
 }
 
 #message-input button {
-  background-color: #4caf50;
-  color: white;
+  background-image: linear-gradient(to right, black, aqua);
+  color: #00ffe1;
   border: none;
   padding: 0.6rem 1rem;
   border-radius: 20px;
@@ -187,4 +197,18 @@ body {
 
 #message-input button:hover {
   background-color: #388e3c;
+}
+
+.logout-btn{
+  border: 2px solid#00ffe1;
+  border-radius: 20px;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  height:2rem;
+  width:5rem;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right:150px;
 }

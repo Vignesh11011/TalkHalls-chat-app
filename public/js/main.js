@@ -24,10 +24,13 @@ function outputMessage(message){
     a.classList.add('message');
     if(username==message.username){
     a.classList.add('sent');}
+    else if(message.username=='HallsManager'){
+        a.classList.add('manager');
+    }
     else{
     a.classList.add('received'); 
     }
-    a.innerHTML=`<span>${message.username}</span><span class="time">${message.time}</span><br>${message.text}`;
+    a.innerHTML=`<span>${message.username}</span><span class="time" >${message.time}</span><br>${message.text}`;
     document.querySelector('.messages').appendChild(a);
 }
 // message submit
