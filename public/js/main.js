@@ -7,14 +7,14 @@ const MemList=document.getElementById('memberList');
 //query string extraction
 const {username,hall}=Qs.parse(location.search,{ignoreQueryPrefix:true});
 socket.emit('joinHall',{username,hall});
-
+document.getElementById('currentUser').innerText=username;
 socket.on('hallMems',({hall,users})=>{
 outputHallname(hall);
 outputMembers(users);
 });
 
 socket.on('Message',message=>{
-    console.log(message);
+   // console.log(message);
     outputMessage(message);
     chatbox.scrollTop=chatbox.scrollHeight;
 });
@@ -45,3 +45,16 @@ function outputHallname(hall){
 function outputMembers(users){
     MemList.innerHTML=`${users.map(user=>`<li>${user.username}</li>`).join('')}`;
 }
+
+
+
+//for changing hall
+
+const a=document.getElementById('joinhallBtn');
+
+a.addEventListener('click',(event)=>{
+    event.preventDefault();
+    const newHall= document.getElementById('hallSelect').value;
+    window.location.href='chat.html'+`?username=${username}&hall=${newHall}`;
+
+});

@@ -25,7 +25,7 @@
     
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="hall-switch">
+      <form class="hall-switch" action="" method="post">
         <label for="hallSelect">Change hall:</label>
         <select id="hallSelect">
           <option value="general">General</option>
@@ -33,9 +33,9 @@
           <option value="gaming">Gaming Zone</option>
           <option value="study">Study hall</option>
         </select>
-        <input type="text" placeholder="Or enter hall code" id="hallCode" />
+        
         <button type='submit'id="joinhallBtn">Join</button>
-      </div>
+      </form>
 
       <div class="hall-info">
         <h3>Current hall: <span id="currenthall"></span></h3>

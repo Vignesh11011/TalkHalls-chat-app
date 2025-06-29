@@ -1,7 +1,7 @@
  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import{getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-  import {getFirestore,setDoc,doc} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js"
+  import{getAuth,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+  import {getFirestore,doc,getDoc} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js"
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
  //import config from 'dotenv';
@@ -25,41 +25,41 @@
     msg.style.opacity=1;
     setTimeout(function(){msg.opacity=0;},5000);
   }
-  const submitBtn=document.getElementById("login-submit");
+  const signIn=document.getElementById("enterBtn");
 
-
-  submitBtn.addEventListener('click',(e)=>{
-    e.preventDefault();
-    const username=document.getElementById("username").value;
-    const email=document.getElementById("email").value;
-    const password=document.getElementById("password").value;
+  // for login page
+  signIn.addEventListener('click', (event)=>{
+    event.preventDefault();
+    const email=document.getElementById('email').value;
+    const password=document.getElementById('password').value;
     const hall=document.getElementById("hall").value;
-
     const auth=getAuth();
     const db=getFirestore();
-
-    createUserWithEmailAndPassword(auth,email,password)
-    .then((userCrd)=>{
-        const user=userCrd.user;
-        const userdata={email:email,password:password,username:username,hall:hall};
-        showMessage('Account creted Sucessfully','lgn-msg');
-        const docRef=doc(db,"users",user.uid);
-        setDoc(docRef,userdata)
-        .then(()=>{
-            window.location.href='chat.html'+`?username=${username}&hall=${hall}`;
+    signInWithEmailAndPassword(auth, email,password)
+    .then((userCredential)=>{
+        showMessage('login is successful', 'lgn-msg');
+        const user=userCredential.user;
+        localStorage.setItem('loggedInUserId', user.uid);
+        const docRef=doc(db,'users',user.uid);
+        getDoc(docRef)
+        .then((docSnap)=>{
+            if(docSnap.exists()){
+                const userData=docSnap.data().username;
+                window.location.href='chat.html'+`?username=${userData}&hall=${hall}`;
+            }
         })
-        .catch((error)=>{console.error("error writing document",error);
-
+        .catch((error)=>{
+            console.log("Error getting data");
         });
+        
     })
     .catch((error)=>{
-        const ec=error.code;
-        if(ec=='auth/email-already-in-use'){
-            showMessage('Email Already Exist','lgn-msg');
+        const errorCode=error.code;
+        if(errorCode==='auth/invalid-credential'){
+            showMessage('Incorrect Email or Password', 'lgn-msg');
         }
         else{
-            showMessage('User Cannot Be Created!!','lgn-msg');
-            console.log(ec);
+            showMessage('Account does not Exist', 'lgn-msg');
         }
-    });
-  });
+    })
+ })
