@@ -22,9 +22,9 @@ io.on('connection',socket=>{
       const user=userJoin(socket.id,username,hall);
       socket.join(user.hall);
 
-      socket.emit('Message',formatMsg(mngrName,'Welcome to TalkHalls!. Remember members once you reload your page all previous chats will be not visible to you.Enjoy your meeting!'));
+      socket.emit('Message',formatMsg(mngrName,'Welcome to TalkHalls!. Remember members, once you reload your page all previous chats will be not visible to you.Enjoy your meeting!'));
       //when people join or leave
-      socket.broadcast.to(user.hall).emit('Message',formatMsg(mngrName,`${user.username} has joined the chat`));
+      socket.broadcast.to(user.hall).emit('Message',formatMsg(mngrName,`${user.username} has entered the hall`));
 
       io.to(user.hall).emit('hallMems',{hall:user.hall,users:getRoomlist(user.hall)});
 
@@ -38,7 +38,7 @@ io.on('connection',socket=>{
     socket.on('disconnect',()=>{
       const user=userLeave(socket.id);
       if(user){
-        io.to(user.hall).emit('Message',formatMsg(mngrName,`${user.username} has left the chat`));
+        io.to(user.hall).emit('Message',formatMsg(mngrName,`${user.username} has left the hall`));
         io.to(user.hall).emit('hallMems',{hall:user.hall,users:getRoomlist(user.hall)});
       }
     });

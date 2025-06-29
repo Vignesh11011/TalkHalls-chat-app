@@ -42,7 +42,7 @@
     .then((userCrd)=>{
         const user=userCrd.user;
         const userdata={email:email,password:password,username:username};
-        showMessage('Account creted Sucessfully','lgn-msg');
+        showMessage('Account created Sucessfully','lgn-msg');
         const docRef=doc(db,"users",user.uid);
         setDoc(docRef,userdata)
         .then(()=>{
