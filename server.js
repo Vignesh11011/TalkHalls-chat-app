@@ -9,7 +9,7 @@ const app=express();
 const server=http.createServer(app);
 const io =socketio(server);
 
-const mngrName='Manager';
+const mngrName='HallsManager';
 
 // static folders
 app.use(express.static(path.join(__dirname,'public')));

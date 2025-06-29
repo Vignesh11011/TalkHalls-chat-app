@@ -22,7 +22,11 @@ socket.on('Message',message=>{
 function outputMessage(message){
     const a= document.createElement('div');
     a.classList.add('message');
-    a.classList.add('sent');
+    if(username==message.username){
+    a.classList.add('sent');}
+    else{
+    a.classList.add('received'); 
+    }
     a.innerHTML=`<span>${message.username}</span><span class="time">${message.time}</span><br>${message.text}`;
     document.querySelector('.messages').appendChild(a);
 }
