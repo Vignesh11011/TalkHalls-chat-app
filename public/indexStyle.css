@@ -5,14 +5,65 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Aurora-Themed Background with Purple and Green Hues */
 body {
-  background-image: url("backgroundIndex.jpg");
-  background-size: contain;
+  margin: 0;
   height: 100vh;
+   background-size: contain;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: radial-gradient(ellipse at bottom, #0e0024 0%, #000000 100%);
+  overflow: hidden;
+  font-family: sans-serif;
+  color: white;
+  position: relative;
 }
+h2, p {
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ccff;
+}
+
+/* Aurora light layers */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(180, 0, 255, 0.12),
+    rgba(0, 255, 136, 0.07),
+    rgba(130, 0, 210, 0.1),
+    rgba(0, 255, 100, 0.06),
+    rgba(255, 0, 255, 0.08),
+    rgba(0, 200, 120, 0.06),
+    rgba(180, 0, 255, 0.12)
+  );
+  animation: aurora 60s linear infinite;
+  z-index: -1;
+  mix-blend-mode: screen;
+  filter: blur(130px);
+  transform: scale(1.5);
+  opacity: 0.85;
+}
+
+body::after {
+  animation-direction: alternate-reverse;
+  opacity: 0.5;
+}
+
+@keyframes aurora {
+  0% {
+    transform: rotate(0deg) scale(1.5);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+
 
 .login-container {
   background: linear-gradient(135deg, #1e1e2f,purple);

@@ -16,7 +16,17 @@ body {
 /* Navbar */
 .navbar {
   height: 60px;
-  background-color: #1e1e2f;
+  /*background-color: #1e1e2f;*/
+  background: linear-gradient(
+    135deg,
+    #1a0026,
+    #220038,
+    #003333,
+    #2d004d,
+    #0a1a2f
+  );
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.1), 0 0 40px rgba(180, 0, 255, 0.1);
+  backdrop-filter: blur(4px);
   color: #fff;
   display: flex;
   align-items: center;
@@ -52,16 +62,29 @@ body {
   display: flex;
   flex: 1;
   height: calc(100vh - 60px);
+
+
+  background: linear-gradient(
+    135deg,
+    #1a0026,
+    #220038,
+    #003333,
+    #2d004d,
+    #0a1a2f
+  );
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.1), 0 0 40px rgba(180, 0, 255, 0.1);
+  backdrop-filter: blur(4px);
 }
 
 /* Sidebar */
 .sidebar {
   width: 300px;
-  background-color: #2f3136;
+  /*background-color: #2f3136;*/
   color: #fff;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  border-right: 2px solid black;
 }
 
 .hall-switch label,
@@ -117,7 +140,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #e5ddd5;
+  /*background-color: #e5ddd5;*/
 }
 
 .messages {
@@ -171,8 +194,8 @@ body {
 #message-input {
   display: flex;
   padding: 0.8rem;
-  background-color: #fff;
-  border-top: 1px solid #ccc;
+  /*background-color: #fff;*/
+  /*border-top: 1px solid #ccc;*/
 }
 
 #message-input input {
