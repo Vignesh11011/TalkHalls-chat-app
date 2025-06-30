@@ -7,13 +7,8 @@
  //import config from 'dotenv';
   // Your web app's Firebase configuration
   const firebaseConfig ={
-    apiKey: "AIzaSyD0Owy8TdneTmE_dIZAsxyhSxSUJHVV410",
-    authDomain: "talkhalls.firebaseapp.com",
-    projectId: "talkhalls",
-    storageBucket: "talkhalls.firebasestorage.app",
-    messagingSenderId: "1021364253106",
-    appId: "1:1021364253106:web:f27a149a3117d265f834ab"
-  };;
+//Add your Firebase credentials here
+  };
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
