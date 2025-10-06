@@ -52,10 +52,11 @@
       </div>
 
       <form id="message-input">
+        <input type="file" id="fileUpload" accept=".txt" style="display: none;" />
+        <button id="fileBtn">📄</button>
+
         <input type="text" id="messageBox" placeholder="Type a message..." required />
         <button id="sendBtn">Send</button>
-        <button id="fileBtn">📄</button>
-        <input type="file" id="fileUpload" accept=".txt" style="display:none;" />
       </form>
     </div>
 
@@ -65,9 +66,7 @@
    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/main.js"></script>
-<script>
-  //code frame fature
-document.getElementById('fileBtn').addEventListener('click', function () {
+  <script>document.getElementById('fileBtn').addEventListener('click', function () {
     document.getElementById('fileUpload').click();
 });
 
@@ -81,7 +80,7 @@ document.getElementById('fileUpload').addEventListener('change', function (e) {
             const text = e.target.result.trim();
             if (text.length > 0) {
                 // Call your existing send message function
-                outputMessage(text);
+                sendMessage(text);
             } else {
                 alert("The file is empty.");
             }

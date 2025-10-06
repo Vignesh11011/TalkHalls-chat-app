@@ -22,15 +22,15 @@ socket.on('Message',message=>{
 function outputMessage(message){
     const a= document.createElement('div');
     a.classList.add('message');
-    if(username==message.username){
+    /*if(username==message.username){
     a.classList.add('sent');}
     else if(message.username=='HallsManager'){
         a.classList.add('manager');
     }
-    else{
+    else{*/
     a.classList.add('received'); 
-    }
-    a.innerHTML=`<span>${message.username}</span><span class="time" >${message.time}</span><br>${message.text}`;
+    //}
+    a.innerHTML=`<br>${message}`;//<span>${message.username}</span><span class="time" >${message.time}</span><br>${message.text}
     document.querySelector('.messages').appendChild(a);
 }
 // message submit
@@ -64,4 +64,36 @@ a.addEventListener('click',(event)=>{
     const newHall= document.getElementById('hallSelect').value;
     window.location.href='chat.html'+`?username=${username}&hall=${newHall}`;
 
+});
+
+
+
+
+//code frame fature
+document.getElementById('fileBtn').addEventListener('click', function () {
+    document.getElementById('fileUpload').click();
+});
+
+document.getElementById('fileUpload').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.type === "text/plain") {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const text = e.target.result.trim();
+            if (text.length > 0) {
+                // Call your existing send message function
+                outputMessage(text);
+            } else {
+                alert("The file is empty.");
+            }
+        };
+        reader.readAsText(file);
+    } else {
+        alert("Only .txt files are supported.");
+    }
+
+    // Reset file input so same file can be reselected
+    e.target.value = '';
 });
