@@ -13,7 +13,7 @@
     storageBucket: "talkhalls.firebasestorage.app",
     messagingSenderId: "1021364253106",
     appId: "1:1021364253106:web:f27a149a3117d265f834ab"
-  };
+  };;
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
