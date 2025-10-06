@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TalkHalls - Chat hall</title>
+  <link rel="stylesheet" href="chat.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="navbar-title">TalkHalls</div>
+  <a href="index.html" style="color:crimson;text-decoration: none;" class="logout-btn">Logout</a>
+  <div class="navbar-user">
+    <img src="PP.jpg"  class="profile-pic">
+    <span id="currentUser"></span>
+  </div>
+</div>
+
+
+  <!-- Main Chat App -->
+  <div class="chat-app">
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <form class="hall-switch" action="" method="post">
+        <label for="hallSelect">Change hall:</label>
+        <select id="hallSelect">
+          <option value="general">General</option>
+          <option value="tech">Tech Talk</option>
+          <option value="gaming">Gaming Zone</option>
+          <option value="study">Study hall</option>
+        </select>
+        
+        <button type='submit'id="joinhallBtn">Enter</button>
+      </form>
+
+      <div class="hall-info">
+        <h3>Current hall: <span id="currenthall"></span></h3>
+        <h4>Members</h4>
+        <ul id="memberList"></ul>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area" id="chat-area">
+      <div class="messages" id="messages">
+        
+      </div>
+
+      <form id="message-input">
+        <input type="text" id="messageBox" placeholder="Type a message..." required />
+        <button id="sendBtn">Send</button>
+      </form>
+    </div>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js"
+   integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" 
+   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
