@@ -1,61 +1,206 @@
-const chatform=document.getElementById('message-input');
-const chatbox=document.getElementById('messages')
-const socket=io();
-const hallName=document.getElementById('currenthall');
-const MemList=document.getElementById('memberList');
+const socket = io();
+const chatbox = document.getElementById('messages');
+const chatform = document.getElementById('message-input');
+const hallName = document.getElementById('currenthall');
+const MemList = document.getElementById('memberList');
 
-//query string extraction
-const {username,hall}=Qs.parse(location.search,{ignoreQueryPrefix:true});
-socket.emit('joinHall',{username,hall});
-document.getElementById('currentUser').innerText=username;
-socket.on('hallMems',({hall,users})=>{
-outputHallname(hall);
-outputMembers(users);
+const attachBtn = document.getElementById('attachBtn');
+const puffPanel = document.getElementById('puffPanel');
+const fileInput = document.getElementById('fileInput');
+const puffNameInput = document.getElementById('puffName');
+const sendPuffBtn = document.getElementById('sendPuff');
+const sendFileBtn = document.getElementById('sendFile');
+const cancelPuffBtn = document.getElementById('cancelPuff');
+const copyAlert = document.getElementById('copyAlert');
+
+const { username, hall } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+document.getElementById('currentUser').innerText = username;
+socket.emit('joinHall', { username, hall });
+
+// --- socket listeners ---
+socket.on('hallMems', ({ hall, users }) => {
+  hallName.innerText = hall;
+  MemList.innerHTML = users.map(u => `<li>${escapeHtml(u.username)}</li>`).join('');
 });
 
-socket.on('Message',message=>{
-   // console.log(message);
-    outputMessage(message);
-    chatbox.scrollTop=chatbox.scrollHeight;
+socket.on('Message', message => {
+  renderMessage(message);
+  chatbox.scrollTop = chatbox.scrollHeight;
 });
 
-function outputMessage(message){
-    const a= document.createElement('div');
-    a.classList.add('message');
-    if(username==message.username){
-    a.classList.add('sent');}
-    else if(message.username=='HallsManager'){
-        a.classList.add('manager');
+socket.on('fileMessage', msg => {
+  renderFileMessage(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+});
+
+// --- send normal chat ---
+chatform.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = e.target.elements.messageBox;
+  const text = input.value.trim();
+  if (!text) return;
+  socket.emit('chatMessage', text);
+  input.value = '';
+  input.focus();
+});
+
+// --- render functions (safe, preserve newlines) ---
+function renderMessage(message) {
+  const container = document.createElement('div');
+  container.classList.add('message');
+
+  let typeClass = 'received';
+  let userClass = 'username-received';
+  if (message.username === username) { typeClass = 'sent'; userClass = 'username-sent'; }
+  else if (message.username === 'HallsManager') { typeClass = 'manager'; userClass = 'username-manager'; }
+
+  container.classList.add(typeClass);
+
+  // header
+  const header = document.createElement('div');
+  header.className = 'message-header';
+  const nameSpan = document.createElement('span');
+  nameSpan.className = userClass;
+  nameSpan.textContent = message.username;
+  const timeSpan = document.createElement('span');
+  timeSpan.className = 'time';
+  timeSpan.textContent = message.time || '';
+  header.appendChild(nameSpan);
+  header.appendChild(timeSpan);
+
+  // message body
+  const body = document.createElement('div');
+  body.className = 'message-text';
+  body.textContent = message.text; // preserve newlines
+
+  container.appendChild(header);
+  container.appendChild(body);
+
+  // Copy on click (except HallsManager)
+ // Copy button (top-right)
+if (message.username !== 'HallsManager') {
+  const copyBtn = document.createElement('button');
+  copyBtn.innerHTML = 'Copy';
+  copyBtn.className = 'copy-btn';
+  copyBtn.title = 'Copy message';
+  copyBtn.addEventListener('click', async (ev) => {
+    ev.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(message.text);
+      showCopyAlert();
+    } catch {
+      alert("Failed to copy text.");
     }
-    else{
-    a.classList.add('received'); 
+  });
+  header.appendChild(copyBtn);
+}
+
+
+  chatbox.appendChild(container);
+}
+
+function renderFileMessage(msg) {
+  const container = document.createElement('div');
+  container.classList.add('message', msg.username === username ? 'sent' : 'received');
+
+  const header = document.createElement('div');
+  header.className = 'message-header';
+  const nameSpan = document.createElement('span');
+  nameSpan.className = msg.username === username ? 'username-sent' : 'username-received';
+  nameSpan.textContent = msg.username;
+  const timeSpan = document.createElement('span');
+  timeSpan.className = 'time';
+  timeSpan.textContent = msg.time || '';
+  header.appendChild(nameSpan);
+  header.appendChild(timeSpan);
+
+  const body = document.createElement('div');
+  body.className = 'message-text';
+  const a = document.createElement('a');
+  a.download = msg.filename || 'file';
+  a.href = msg.fileDataUrl;
+  a.textContent = `Download ${msg.filename || 'file'}`;
+  body.appendChild(a);
+
+  container.appendChild(header);
+  container.appendChild(body);
+  chatbox.appendChild(container);
+}
+
+// --- copy alert animation ---
+function showCopyAlert() {
+  copyAlert.classList.remove('hidden');
+  copyAlert.classList.add('show');
+  setTimeout(() => {
+    copyAlert.classList.remove('show');
+    copyAlert.classList.add('hidden');
+  }, 1200);
+}
+
+// --- attach/puff panel controls ---
+attachBtn.addEventListener('click', () => {
+  puffPanel.classList.toggle('hidden');
+});
+cancelPuffBtn.addEventListener('click', () => {
+  puffPanel.classList.add('hidden');
+  fileInput.value = '';
+  puffNameInput.value = '';
+});
+
+function isAllowedFileName(name) {
+  const lower = name.toLowerCase();
+  return ['.c', '.cpp', '.java', '.py', '.txt', '.js', '.json', '.md'].some(ext => lower.endsWith(ext));
+}
+
+// --- send Puff ---
+sendPuffBtn.addEventListener('click', async () => {
+  const file = fileInput.files[0];
+  if (!file) return alert('Please select a file.');
+  if (!isAllowedFileName(file.name)) return alert('Unsupported file type.');
+
+  let text;
+  try { text = await file.text(); } catch { return alert('Unable to read file'); }
+
+  const puffName = puffNameInput.value.trim();
+  let toSend = text;
+  if (puffName) {
+    const lines = text.split(/\r?\n/);
+    const positions = [];
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes(`$T${puffName}$T`)) positions.push(i);
     }
-    a.innerHTML=`<span>${message.username}</span><span class="time" >${message.time}</span><br>${message.text}`;
-    document.querySelector('.messages').appendChild(a);
+    if (positions.length >= 2) {
+      const snippet = lines.slice(positions[0] + 1, positions[1]).join('\n');
+      toSend = snippet || text;
+    } else {
+      return alert(`Puff '${puffName}' not found.`);
+    }
+  }
+  socket.emit('chatMessage', toSend);
+  puffPanel.classList.add('hidden');
+  fileInput.value = '';
+  puffNameInput.value = '';
+});
+
+// --- send File ---
+sendFileBtn.addEventListener('click', () => {
+  const file = fileInput.files[0];
+  if (!file) return alert('Please select a file.');
+  const reader = new FileReader();
+  reader.onload = e => {
+    socket.emit('fileUpload', { filename: file.name, dataUrl: e.target.result });
+    puffPanel.classList.add('hidden');
+    fileInput.value = '';
+    puffNameInput.value = '';
+  };
+  reader.readAsDataURL(file);
+});
+
+// --- helper ---
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, t => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[t]));
 }
-// message submit
-chatform.addEventListener('submit',(e)=>{e.preventDefault();
-    const msg=e.target.elements.messageBox.value;
-    socket.emit('chatMessage',msg);
-    e.target.elements.messageBox.value='';
-    e.target.elements.messageBox.focus();
-
-})
-
-
-//Room details 
-
-function outputHallname(hall){
-    hallName.innerText=hall;
-
-}
-function outputMembers(users){
-    MemList.innerHTML=`${users.map(user=>`<li>${user.username}</li>`).join('')}`;
-}
-
-
-
-//for changing hall
 
 const a=document.getElementById('joinhallBtn');
 

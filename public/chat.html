@@ -6,62 +6,78 @@
   <title>TalkHalls - Chat hall</title>
   <link rel="stylesheet" href="chat.css" />
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
 <!-- Navbar -->
 <div class="navbar">
   <div class="navbar-title">TalkHalls</div>
-  <a href="index.html" style="color:crimson;text-decoration: none;" class="logout-btn">Logout</a>
+  <a href="index.html" class="logout-btn">Logout</a>
   <div class="navbar-user">
-    <img src="PP.jpg"  class="profile-pic">
+    <img src="PP.jpg" class="profile-pic" alt="profile">
     <span id="currentUser"></span>
   </div>
 </div>
 
+<!-- Main Chat App -->
+<div class="chat-app">
 
-  <!-- Main Chat App -->
-  <div class="chat-app">
-    
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <form class="hall-switch" action="" method="post">
-        <label for="hallSelect">Change hall:</label>
-        <select id="hallSelect">
-          <option value="general">General</option>
-          <option value="tech">Tech Talk</option>
-          <option value="gaming">Gaming Zone</option>
-          <option value="study">Study hall</option>
-        </select>
-        
-        <button type='submit'id="joinhallBtn">Enter</button>
-      </form>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <form class="hall-switch" action="" method="post">
+      <label for="hallSelect">Change hall:</label>
+      <select id="hallSelect">
+        <option value="general">General</option>
+        <option value="tech">Tech Talk</option>
+        <option value="gaming">Gaming Zone</option>
+        <option value="study">Study hall</option>
+      </select>
+      <button type="submit" id="joinhallBtn">Enter</button>
+    </form>
 
-      <div class="hall-info">
-        <h3>Current hall: <span id="currenthall"></span></h3>
-        <h4>Members</h4>
-        <ul id="memberList"></ul>
-      </div>
+    <div class="hall-info">
+      <h3>Current hall: <span id="currenthall"></span></h3>
+      <h4>Members</h4>
+      <ul id="memberList"></ul>
     </div>
+  </div>
 
-    <!-- Chat Area -->
-    <div class="chat-area" id="chat-area">
-      <div class="messages" id="messages">
-        
+  <!-- Chat Area -->
+  <div class="chat-area" id="chat-area">
+    <div class="messages" id="messages"></div>
+
+    <!-- Input row -->
+    <form id="message-input">
+      <button type="button" id="attachBtn" title="Attach File">📎</button>
+      <textarea id="messageBox" placeholder="Type a message..." autocomplete="off"></textarea>
+      <button id="sendBtn" type="submit">Send</button>
+    </form>
+
+    <!-- Puff Panel (hidden by default) -->
+    <div class="puff-panel hidden" id="puffPanel" aria-hidden="true">
+      <label class="small-label">Choose file (code/text)</label>
+      <input type="file" id="fileInput" accept=".txt,.py,.c,.cpp,.java,.js,.json,.md" />
+      <input type="text" id="puffName" placeholder="Puff name (optional) — e.g. MyPuff" />
+      <div class="puff-btns">
+        <button type="button" id="sendPuff">Send Puff</button>
+        <button type="button" id="sendFile">Send File</button>
+        <button type="button" id="cancelPuff">Cancel</button>
       </div>
-
-      <form id="message-input">
-        <input type="text" id="messageBox" placeholder="Type a message..." required />
-        <button id="sendBtn">Send</button>
-      </form>
+      <small class="hint">
+        Wrap snippets in your file with markers:<br>
+        C/CPP/Java/JS: <code>// $T<PuffName>$T</code><br>
+        Python: <code># $T<PuffName>$T</code>
+      </small>
     </div>
 
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js"
-   integrity="sha512-6yLIYbXqyvjSDYNO1pgBRjwWPBw66kMOb+sHqrvn457+iJiret0PeHzUlpLKHH0fYzX9bxGtPDqQ84xKrhEYSQ==" 
-   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/main.js"></script>
+</div>
+
+<!-- Floating copy alert -->
+<div id="copyAlert" class="copy-alert hidden">Copied!</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.14.0/qs.min.js" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
