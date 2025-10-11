@@ -91,7 +91,7 @@ body { height:100vh; background: linear-gradient(135deg,#f9fcff,#eef8ff); color:
 
 /* Puff panel (positions above input, centered) */
 .puff-panel {
-  position:absolute; bottom:74px; left:10%; transform:translateX(-50%); width:360px;
+  position:absolute; bottom:74px; left:15%; transform:translateX(-50%); width:360px;
   background:#ffffff; border-radius:12px; padding:12px; box-shadow:0 10px 30px rgba(3,17,26,0.12); z-index:30;
   display:flex; flex-direction:column; gap:8px; animation:panelIn .18s ease-out;
 }
