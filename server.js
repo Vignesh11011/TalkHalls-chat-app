@@ -22,7 +22,7 @@ io.on('connection',socket=>{
       const user=userJoin(socket.id,username,hall);
       socket.join(user.hall);
 
-      socket.emit('Message',formatMsg(mngrName,'Welcome to TalkHalls!. Remember members,chats will be cleared for every 3 days and dont forgot to use the puffs feature where you can sent only the desired part of your text or code file by enclosing it in between comment lines haveing a syntax $Tpuffname$T.Enjoy your meeting!'));
+      socket.emit('Message',formatMsg(mngrName,'Welcome to TalkHalls!. Remember members,chats will be cleared for every 3 days and do not forgot to use our puffs feature where you can send only the desired part of your text or code file by enclosing it in between comment lines having a syntax $Tpuffname$T.Enjoy your meeting!'));
       //when people join or leave
       socket.broadcast.to(user.hall).emit('Message',formatMsg(mngrName,`${user.username} has entered the hall`));
 
