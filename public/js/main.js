@@ -1,3 +1,17 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyD0Owy8TdneTmE_dIZAsxyhSxSUJHVV410",
+  authDomain: "talkhalls.firebaseapp.com",
+  projectId: "talkhalls",
+  storageBucket: "talkhalls.firebasestorage.app",
+  messagingSenderId: "1021364253106",
+  appId: "1:1021364253106:web:f27a149a3117d265f834ab"
+};
+const appFB = initializeApp(firebaseConfig);
+const db = getFirestore(appFB);
+const storage = getStorage(appFB);
 const socket = io();
 const chatbox = document.getElementById('messages');
 const chatform = document.getElementById('message-input');
@@ -16,6 +30,24 @@ const copyAlert = document.getElementById('copyAlert');
 const { username, hall } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 document.getElementById('currentUser').innerText = username;
 socket.emit('joinHall', { username, hall });
+loadPreviousChats(hall);
+function formatFirestoreTime(timestamp) {
+  if (!timestamp) return '';
+  const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+async function loadPreviousChats(hall) {
+  const q = query(collection(db, "halls", hall, "messages"), orderBy("timestamp", "asc"));
+  const snap = await getDocs(q);
+  snap.forEach(doc => {
+    const data = doc.data();
+    data.time = formatFirestoreTime(data.timestamp);
+    if (data.type === "file") renderFileMessage(data);
+    else renderMessage(data);
+  });
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
 
 // --- socket listeners ---
 socket.on('hallMems', ({ hall, users }) => {
@@ -34,12 +66,19 @@ socket.on('fileMessage', msg => {
 });
 
 // --- send normal chat ---
-chatform.addEventListener('submit', (e) => {
+chatform.addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = e.target.elements.messageBox;
   const text = input.value.trim();
   if (!text) return;
   socket.emit('chatMessage', text);
+  await addDoc(collection(db, "halls", hall, "messages"), {
+  username,
+  text,
+  type: "text",
+  timestamp: serverTimestamp()
+});
+
   input.value = '';
   input.focus();
 });
