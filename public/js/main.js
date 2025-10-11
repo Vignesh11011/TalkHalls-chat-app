@@ -198,10 +198,16 @@ sendPuffBtn.addEventListener('click', async () => {
   if (!isAllowedFileName(file.name)) return alert('Unsupported file type.');
 
   let text;
-  try { text = await file.text(); } catch { return alert('Unable to read file'); }
+  try {
+    text = await file.text();
+  } catch {
+    return alert('Unable to read file');
+  }
 
   const puffName = puffNameInput.value.trim();
   let toSend = text;
+
+  // Extract snippet between tags if puff name is provided
   if (puffName) {
     const lines = text.split(/\r?\n/);
     const positions = [];
@@ -215,11 +221,31 @@ sendPuffBtn.addEventListener('click', async () => {
       return alert(`Puff '${puffName}' not found.`);
     }
   }
+
+  // Get current user info
+  const messageData = {
+    username,
+    text:toSend,
+    type: "puff",
+    timestamp:serverTimestamp(),
+  };
+
+  try {
+    await addDoc(collection(db, "halls", hall, "messages"),messageData);
+    console.log("Puff saved to Firestore!");
+  } catch (err) {
+    console.error("Error saving puff:", err);
+  }
+
+  // Send to Socket.IO for live chat
   socket.emit('chatMessage', toSend);
+
+  // Reset UI
   puffPanel.classList.add('hidden');
   fileInput.value = '';
   puffNameInput.value = '';
 });
+
 
 // --- send File ---
 sendFileBtn.addEventListener('click', () => {
